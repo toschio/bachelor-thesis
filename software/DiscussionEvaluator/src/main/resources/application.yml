@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: discussion-evaluator
+
+  main:
+    allow-bean-definition-overriding: true
+
+  kafka:
+    bootstrap-servers: kafka:29092,kafka2:29093,kafka3:29094,kafka4:29095
+
+resources:
+  kafka:
+    broker: kafka:29092,kafka2:29093,kafka3:29094
+    repl-factor: ${REPLICATION_FACTOR}
+    consumergroupid: "discussion-evaluator"
+
+  topics:
+    xapi_statement_discussion:
+      topicname: 'edutec.micro.discussion'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+
+    discussion_analytics:
+      topicname: 'discussion-analytics'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+
+  stores:
+    number_of_posts_per_user: "edutec.micro.discussion_number-of-post-per-user-per-discussion"
+    reply_time_of_post_per_discussion: "edutec.micro.discussion_reply-time-of-post-per-discussion"
+
+debug: true
+logging:
+  level: debug
+logging.level.org.springframework.kafka.config: debug

@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: assessment-evaluator
+
+  main:
+    allow-bean-definition-overriding: true
+
+
+resources:
+  kafka:
+    broker: kafka:29092,kafka2:29093,kafka3:29094
+    repl-factor: ${REPLICATION_FACTOR}
+    consumergroupid: "assessment-evaluator"
+
+  topics:
+    leap_motion:
+      topicname: '__.goethe-universitaet-frankfurt.myo.frames'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+
+    xapi_statement_assessment:
+      topicname: 'edutec.micro.assessment'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+
+    assessment_analytics:
+      topicname: 'assessment-analytics'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+  stores:
+    user_keyed_session_windowed_leap_motion: '__.goethe-universitaet-frankfurt.myo.frames.user-keyed.sessioned'
+
+debug: true
+logging:
+  level: debug
+logging.level.org.springframework.kafka.config: debug

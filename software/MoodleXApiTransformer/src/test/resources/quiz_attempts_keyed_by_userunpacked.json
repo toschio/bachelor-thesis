@@ -1,0 +1,92 @@
+[
+  {
+    "SELF_ID": 1,
+    "QUIZID": 1,
+    "ID": 1,
+    "TIMESTART": 1567215372,
+    "TIMEFINISH": 1567225372,
+    "TIMEMODIFIED": 1567215372,
+    "SUMGRADES": "AYag"
+  },
+  {
+    "SELF_ID": 2,
+    "QUIZID": 1,
+    "ID": 2,
+    "TIMESTART": 1567215372,
+    "TIMEFINISH": 1567225372,
+    "TIMEMODIFIED": 1567215372,
+    "SUMGRADES": "AYag"
+  },
+  {
+    "SELF_ID": 3,
+    "QUIZID": 1,
+    "ID": 3,
+    "TIMESTART": 1567215372,
+    "TIMEFINISH": 1567225372,
+    "TIMEMODIFIED": 1567215372,
+    "SUMGRADES": "AYag"
+  },
+  {
+    "SELF_ID": 4,
+    "QUIZID": 1,
+    "ID": 4,
+    "TIMESTART": 1567215372,
+    "TIMEFINISH": 1567225372,
+    "TIMEMODIFIED": 1567215372,
+    "SUMGRADES": "AYag"
+  },
+  {
+    "SELF_ID": 5,
+    "QUIZID": 1,
+    "ID": 5,
+    "TIMESTART": 1567215372,
+    "TIMEFINISH": 1567225372,
+    "TIMEMODIFIED": 1567215372,
+    "SUMGRADES": "AYag"
+  },
+  {
+    "SELF_ID": 6,
+    "QUIZID": 2,
+    "ID": 6,
+    "TIMESTART": 1567215372,
+    "TIMEFINISH": 1567225372,
+    "TIMEMODIFIED": 1567215372,
+    "SUMGRADES": "AYag"
+  },
+  {
+    "SELF_ID": 7,
+    "QUIZID": 2,
+    "ID": 7,
+    "TIMESTART": 1567215372,
+    "TIMEFINISH": 1567225372,
+    "TIMEMODIFIED": 1567215372,
+    "SUMGRADES": "AYag"
+  },
+  {
+    "SELF_ID": 8,
+    "QUIZID": 2,
+    "ID": 8,
+    "TIMESTART": 1567215372,
+    "TIMEFINISH": 1567225372,
+    "TIMEMODIFIED": 1567215372,
+    "SUMGRADES": "AYag"
+  },
+  {
+    "SELF_ID": 9,
+    "QUIZID": 2,
+    "ID": 9,
+    "TIMESTART": 1567215372,
+    "TIMEFINISH": 1567225372,
+    "TIMEMODIFIED": 1567215372,
+    "SUMGRADES": "AYag"
+  },
+  {
+    "SELF_ID": 10,
+    "QUIZID": 2,
+    "ID": 10,
+    "TIMESTART": 1567215372,
+    "TIMEFINISH": 1567225372,
+    "TIMEMODIFIED": 1567215372,
+    "SUMGRADES": "AYag"
+  }
+]

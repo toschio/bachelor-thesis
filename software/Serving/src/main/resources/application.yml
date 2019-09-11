@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: serving
+
+  main:
+    allow-bean-definition-overriding: true
+
+  kafka:
+    bootstrap-servers: kafka:29092,kafka2:29093,kafka3:29094,kafka4:29095
+
+resources:
+  kafka:
+    broker: kafka:29092,kafka2:29093,kafka3:29094
+    repl-factor: ${REPLICATION_FACTOR}
+    consumergroupid: "serving"
+
+  stat_websocket: "/topic/mdl_forum_posts/stat"
+  assessment_stat_websocket: "/topic/leap_motion/stat"
+
+  topics:
+    discussion_analytics:
+      topicname: 'discussion-analytics'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+
+    assessment_analytics:
+      topicname: 'assessment-analytics'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+
+  stores:
+    discussion_analytics_store: "discussion-analytics-store"
+    assessment_analytics_store: "assessment_analytics_store"
+debug: true
+logging:
+  level: debug
+logging.level.org.springframework.kafka.config: debug

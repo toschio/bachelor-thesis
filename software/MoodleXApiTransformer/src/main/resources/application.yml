@@ -1,0 +1,99 @@
+spring:
+  application:
+    name: xapi-transfomer
+
+  main:
+    allow-bean-definition-overriding: true
+
+resources:
+  kafka:
+    consumergroupid: "xapi-transformer"
+    clientid: "xapi-transformer"
+    broker: kafka:29092,kafka2:29093,kafka3:29094,kafka4:29095
+    repl-factor: ${REPLICATION_FACTOR}
+
+  topics:
+    #
+    #### source topic
+    #
+    # forum posts from moodle in cdc format
+    moodle_forum_posts_source:
+      topicname: '__.goethe-universitaet-frankfurt.db.moodle.mdl_forum_posts'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+
+    # forums from moodle in cdc format
+    moodle_forum_source:
+      topicname: '__.goethe-universitaet-frankfurt.db.moodle.mdl_forum'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+    # user from moodle in cdc format
+    moodle_user_source:
+      topicname: '__.goethe-universitaet-frankfurt.db.moodle.mdl_user'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+
+    moodle_user_source_unpacked:
+      topicname: '__.goethe-universitaet-frankfurt.db.moodle.mdl_user.unpacked'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+
+    # moodle quiz attempts unpacked todo the name is tricky, as KSQL makes all letters uppercase and rejects . as well as -
+    moodle_quiz_attempts_source_unpacked_keyed_by_user:
+      topicname: '__GOETHEUNIVERSITAETFRANKFURT_MDLQUIZATTEMPTS_UNPACKED_KEYED_BY_USER'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+
+    # moodle quiz attempts unpacked todo the name is tricky, as KSQL makes all letters uppercase and rejects . as well as -
+    moodle_quiz_source_unpacked:
+      topicname: '__GOETHEUNIVERSITAETFRANKFURT_MDLQUIZ_UNPACKED_KEYED'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+    #
+    #### publication topics
+    #
+
+    # XAPI statements comprised as "discussion"
+    xapi_statement_discussion:
+      topicname: 'edutec.micro.discussion'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+
+    xapi_statement_assessment:
+      topicname: 'edutec.micro.assessment'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+
+    #
+    # topic created for ksql, not directly consumed here, but generated on startup
+    # todo if initial topic creation is managed differently the following can be removed
+    #
+    moodle_quiz:
+      topicname: '__.goethe-universitaet-frankfurt.db.moodle.mdl_quiz'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+
+    moodle_quiz_attempts:
+      topicname: '__.goethe-universitaet-frankfurt.db.moodle.mdl_quiz_attempts'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: ${PARTITION_FACTOR}
+
+    #
+    # topics created for Connect Debezium
+    #
+    db_schema_history:
+      topicname: '__.goethe-universitaet-frankfurt.db.moodle.cdc.schema.changes.forumetc'
+      replfactor: ${REPLICATION_FACTOR}
+      partitionfactor: 1 # must be one !
+
+  # internal materialized state stores
+  stores:
+    mdl_user_source_unpacked_store: '__.goethe-universitaet-frankfurt.db.moodle.mdl_user.unpacked'
+    mdl_forum_source_unpacked_store: '__.goethe-universitaet-frankfurt.db.moodle.mdl_forum.unpacked'
+
+
+
+debug: true
+logging:
+  level: debug
+logging.level.org.springframework.kafka.config: debug

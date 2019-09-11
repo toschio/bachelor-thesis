@@ -1,0 +1,642 @@
+[
+  {
+    "actor": {
+      "@type": "Agent",
+      "objectType": "Agent",
+      "name": "Guest user  ",
+      "mbox": "mailto:root@localhost",
+      "mboxSHA1Sum": "35481476121e7c530db9cdb6681cbaee559b9ffe",
+      "openID": null,
+      "account": null
+    },
+    "verb": {
+      "id": "submit",
+      "display": null
+    },
+    "object": null,
+    "result": null,
+    "context": {
+      "registration": null,
+      "instructor": null,
+      "team": null,
+      "contextActivities": {
+        "parent": null,
+        "grouping": null,
+        "other": null,
+        "category": [
+          {
+            "@type": "Activity",
+            "objectType": "Activity",
+            "id": "goethe-universitaet-frankfurt.moodle.forum.1",
+            "definition": {
+              "name": {
+                "_map": {
+                  "name": "quiz 1 name"
+                }
+              },
+              "description": null,
+              "type": null,
+              "moreInfo": null,
+              "extensions": null,
+              "interactionType": null,
+              "correctResponsesPattern": null,
+              "choices": null,
+              "scale": null,
+              "source": null,
+              "target": null,
+              "steps": null
+            }
+          }
+        ]
+      },
+      "revision": null,
+      "platform": "goethe-universitaet-frankfurt.moodle",
+      "language": null,
+      "statement": null,
+      "extensions": null
+    },
+    "timestamp": 1567544096000,
+    "attachments": null,
+    "voided": null,
+    "id": "65c57e9f-9344-3daf-8880-c55fe79768cc",
+    "stored": 1567544096353,
+    "authority": null,
+    "version": null
+  },
+  {
+    "actor": {
+      "@type": "Agent",
+      "objectType": "Agent",
+      "name": "Admin User",
+      "mbox": "mailto:admin@test.de",
+      "mboxSHA1Sum": "1f67a8ee712db3fe1e7a982f9bffc81955a60c9f",
+      "openID": null,
+      "account": null
+    },
+    "verb": {
+      "id": "submit",
+      "display": null
+    },
+    "object": null,
+    "result": null,
+    "context": {
+      "registration": null,
+      "instructor": null,
+      "team": null,
+      "contextActivities": {
+        "parent": null,
+        "grouping": null,
+        "other": null,
+        "category": [
+          {
+            "@type": "Activity",
+            "objectType": "Activity",
+            "id": "goethe-universitaet-frankfurt.moodle.forum.1",
+            "definition": {
+              "name": {
+                "_map": {
+                  "name": "quiz 1 name"
+                }
+              },
+              "description": null,
+              "type": null,
+              "moreInfo": null,
+              "extensions": null,
+              "interactionType": null,
+              "correctResponsesPattern": null,
+              "choices": null,
+              "scale": null,
+              "source": null,
+              "target": null,
+              "steps": null
+            }
+          }
+        ]
+      },
+      "revision": null,
+      "platform": "goethe-universitaet-frankfurt.moodle",
+      "language": null,
+      "statement": null,
+      "extensions": null
+    },
+    "timestamp": 1567544096000,
+    "attachments": null,
+    "voided": null,
+    "id": "ae10ea04-8437-3e4f-b23f-05388ecc748b",
+    "stored": 1567544096387,
+    "authority": null,
+    "version": null
+  },
+  {
+    "actor": {
+      "@type": "Agent",
+      "objectType": "Agent",
+      "name": "franz1 kafka1",
+      "mbox": "mailto:franz@kafka",
+      "mboxSHA1Sum": "0e0b01a4fb6da9670929f08e80428c6edfc54ad5",
+      "openID": null,
+      "account": null
+    },
+    "verb": {
+      "id": "submit",
+      "display": null
+    },
+    "object": null,
+    "result": null,
+    "context": {
+      "registration": null,
+      "instructor": null,
+      "team": null,
+      "contextActivities": {
+        "parent": null,
+        "grouping": null,
+        "other": null,
+        "category": [
+          {
+            "@type": "Activity",
+            "objectType": "Activity",
+            "id": "goethe-universitaet-frankfurt.moodle.forum.1",
+            "definition": {
+              "name": {
+                "_map": {
+                  "name": "quiz 1 name"
+                }
+              },
+              "description": null,
+              "type": null,
+              "moreInfo": null,
+              "extensions": null,
+              "interactionType": null,
+              "correctResponsesPattern": null,
+              "choices": null,
+              "scale": null,
+              "source": null,
+              "target": null,
+              "steps": null
+            }
+          }
+        ]
+      },
+      "revision": null,
+      "platform": "goethe-universitaet-frankfurt.moodle",
+      "language": null,
+      "statement": null,
+      "extensions": null
+    },
+    "timestamp": 1567544096000,
+    "attachments": null,
+    "voided": null,
+    "id": "29bc2bda-9ea3-3e83-92c8-b15f535392b2",
+    "stored": 1567544097042,
+    "authority": null,
+    "version": null
+  },
+  {
+    "actor": {
+      "@type": "Agent",
+      "objectType": "Agent",
+      "name": "franz2 kafka2",
+      "mbox": "mailto:franz@kafka",
+      "mboxSHA1Sum": "0e0b01a4fb6da9670929f08e80428c6edfc54ad5",
+      "openID": null,
+      "account": null
+    },
+    "verb": {
+      "id": "submit",
+      "display": null
+    },
+    "object": null,
+    "result": null,
+    "context": {
+      "registration": null,
+      "instructor": null,
+      "team": null,
+      "contextActivities": {
+        "parent": null,
+        "grouping": null,
+        "other": null,
+        "category": [
+          {
+            "@type": "Activity",
+            "objectType": "Activity",
+            "id": "goethe-universitaet-frankfurt.moodle.forum.1",
+            "definition": {
+              "name": {
+                "_map": {
+                  "name": "quiz 1 name"
+                }
+              },
+              "description": null,
+              "type": null,
+              "moreInfo": null,
+              "extensions": null,
+              "interactionType": null,
+              "correctResponsesPattern": null,
+              "choices": null,
+              "scale": null,
+              "source": null,
+              "target": null,
+              "steps": null
+            }
+          }
+        ]
+      },
+      "revision": null,
+      "platform": "goethe-universitaet-frankfurt.moodle",
+      "language": null,
+      "statement": null,
+      "extensions": null
+    },
+    "timestamp": 1567544096000,
+    "attachments": null,
+    "voided": null,
+    "id": "e2e32412-76bf-3c3a-8a13-21f59d123536",
+    "stored": 1567544097044,
+    "authority": null,
+    "version": null
+  },
+  {
+    "actor": {
+      "@type": "Agent",
+      "objectType": "Agent",
+      "name": "franz3 kafka3",
+      "mbox": "mailto:franz@kafka",
+      "mboxSHA1Sum": "0e0b01a4fb6da9670929f08e80428c6edfc54ad5",
+      "openID": null,
+      "account": null
+    },
+    "verb": {
+      "id": "submit",
+      "display": null
+    },
+    "object": null,
+    "result": null,
+    "context": {
+      "registration": null,
+      "instructor": null,
+      "team": null,
+      "contextActivities": {
+        "parent": null,
+        "grouping": null,
+        "other": null,
+        "category": [
+          {
+            "@type": "Activity",
+            "objectType": "Activity",
+            "id": "goethe-universitaet-frankfurt.moodle.forum.1",
+            "definition": {
+              "name": {
+                "_map": {
+                  "name": "quiz 1 name"
+                }
+              },
+              "description": null,
+              "type": null,
+              "moreInfo": null,
+              "extensions": null,
+              "interactionType": null,
+              "correctResponsesPattern": null,
+              "choices": null,
+              "scale": null,
+              "source": null,
+              "target": null,
+              "steps": null
+            }
+          }
+        ]
+      },
+      "revision": null,
+      "platform": "goethe-universitaet-frankfurt.moodle",
+      "language": null,
+      "statement": null,
+      "extensions": null
+    },
+    "timestamp": 1567544096000,
+    "attachments": null,
+    "voided": null,
+    "id": "4ff7dbac-c808-3de2-8f3c-9109a29e1467",
+    "stored": 1567544097044,
+    "authority": null,
+    "version": null
+  },
+  {
+    "actor": {
+      "@type": "Agent",
+      "objectType": "Agent",
+      "name": "franz4 kafka4",
+      "mbox": "mailto:franz@kafka",
+      "mboxSHA1Sum": "0e0b01a4fb6da9670929f08e80428c6edfc54ad5",
+      "openID": null,
+      "account": null
+    },
+    "verb": {
+      "id": "submit",
+      "display": null
+    },
+    "object": null,
+    "result": null,
+    "context": {
+      "registration": null,
+      "instructor": null,
+      "team": null,
+      "contextActivities": {
+        "parent": null,
+        "grouping": null,
+        "other": null,
+        "category": [
+          {
+            "@type": "Activity",
+            "objectType": "Activity",
+            "id": "goethe-universitaet-frankfurt.moodle.forum.2",
+            "definition": {
+              "name": {
+                "_map": {
+                  "name": "quiz 2 name"
+                }
+              },
+              "description": null,
+              "type": null,
+              "moreInfo": null,
+              "extensions": null,
+              "interactionType": null,
+              "correctResponsesPattern": null,
+              "choices": null,
+              "scale": null,
+              "source": null,
+              "target": null,
+              "steps": null
+            }
+          }
+        ]
+      },
+      "revision": null,
+      "platform": "goethe-universitaet-frankfurt.moodle",
+      "language": null,
+      "statement": null,
+      "extensions": null
+    },
+    "timestamp": 1567544096000,
+    "attachments": null,
+    "voided": null,
+    "id": "a26e41d0-2984-3fbe-b5fa-579869f27e0d",
+    "stored": 1567544097045,
+    "authority": null,
+    "version": null
+  },
+  {
+    "actor": {
+      "@type": "Agent",
+      "objectType": "Agent",
+      "name": "franz5 kafka5",
+      "mbox": "mailto:franz@kafka",
+      "mboxSHA1Sum": "0e0b01a4fb6da9670929f08e80428c6edfc54ad5",
+      "openID": null,
+      "account": null
+    },
+    "verb": {
+      "id": "submit",
+      "display": null
+    },
+    "object": null,
+    "result": null,
+    "context": {
+      "registration": null,
+      "instructor": null,
+      "team": null,
+      "contextActivities": {
+        "parent": null,
+        "grouping": null,
+        "other": null,
+        "category": [
+          {
+            "@type": "Activity",
+            "objectType": "Activity",
+            "id": "goethe-universitaet-frankfurt.moodle.forum.2",
+            "definition": {
+              "name": {
+                "_map": {
+                  "name": "quiz 2 name"
+                }
+              },
+              "description": null,
+              "type": null,
+              "moreInfo": null,
+              "extensions": null,
+              "interactionType": null,
+              "correctResponsesPattern": null,
+              "choices": null,
+              "scale": null,
+              "source": null,
+              "target": null,
+              "steps": null
+            }
+          }
+        ]
+      },
+      "revision": null,
+      "platform": "goethe-universitaet-frankfurt.moodle",
+      "language": null,
+      "statement": null,
+      "extensions": null
+    },
+    "timestamp": 1567544096000,
+    "attachments": null,
+    "voided": null,
+    "id": "2f90946e-fa86-339d-8d09-aa57bc31c59f",
+    "stored": 1567544097046,
+    "authority": null,
+    "version": null
+  },
+  {
+    "actor": {
+      "@type": "Agent",
+      "objectType": "Agent",
+      "name": "franz6 kafka6",
+      "mbox": "mailto:franz@kafka",
+      "mboxSHA1Sum": "0e0b01a4fb6da9670929f08e80428c6edfc54ad5",
+      "openID": null,
+      "account": null
+    },
+    "verb": {
+      "id": "submit",
+      "display": null
+    },
+    "object": null,
+    "result": null,
+    "context": {
+      "registration": null,
+      "instructor": null,
+      "team": null,
+      "contextActivities": {
+        "parent": null,
+        "grouping": null,
+        "other": null,
+        "category": [
+          {
+            "@type": "Activity",
+            "objectType": "Activity",
+            "id": "goethe-universitaet-frankfurt.moodle.forum.2",
+            "definition": {
+              "name": {
+                "_map": {
+                  "name": "quiz 2 name"
+                }
+              },
+              "description": null,
+              "type": null,
+              "moreInfo": null,
+              "extensions": null,
+              "interactionType": null,
+              "correctResponsesPattern": null,
+              "choices": null,
+              "scale": null,
+              "source": null,
+              "target": null,
+              "steps": null
+            }
+          }
+        ]
+      },
+      "revision": null,
+      "platform": "goethe-universitaet-frankfurt.moodle",
+      "language": null,
+      "statement": null,
+      "extensions": null
+    },
+    "timestamp": 1567544096000,
+    "attachments": null,
+    "voided": null,
+    "id": "8d97697d-c904-3396-891c-e506a7234eaa",
+    "stored": 1567544097263,
+    "authority": null,
+    "version": null
+  },
+  {
+    "actor": {
+      "@type": "Agent",
+      "objectType": "Agent",
+      "name": "franz7 kafka7",
+      "mbox": "mailto:franz@kafka",
+      "mboxSHA1Sum": "0e0b01a4fb6da9670929f08e80428c6edfc54ad5",
+      "openID": null,
+      "account": null
+    },
+    "verb": {
+      "id": "submit",
+      "display": null
+    },
+    "object": null,
+    "result": null,
+    "context": {
+      "registration": null,
+      "instructor": null,
+      "team": null,
+      "contextActivities": {
+        "parent": null,
+        "grouping": null,
+        "other": null,
+        "category": [
+          {
+            "@type": "Activity",
+            "objectType": "Activity",
+            "id": "goethe-universitaet-frankfurt.moodle.forum.2",
+            "definition": {
+              "name": {
+                "_map": {
+                  "name": "quiz 2 name"
+                }
+              },
+              "description": null,
+              "type": null,
+              "moreInfo": null,
+              "extensions": null,
+              "interactionType": null,
+              "correctResponsesPattern": null,
+              "choices": null,
+              "scale": null,
+              "source": null,
+              "target": null,
+              "steps": null
+            }
+          }
+        ]
+      },
+      "revision": null,
+      "platform": "goethe-universitaet-frankfurt.moodle",
+      "language": null,
+      "statement": null,
+      "extensions": null
+    },
+    "timestamp": 1567544096000,
+    "attachments": null,
+    "voided": null,
+    "id": "c9deb3e7-75cd-3a6b-af47-f0106376cb6b",
+    "stored": 1567544097264,
+    "authority": null,
+    "version": null
+  },
+  {
+    "actor": {
+      "@type": "Agent",
+      "objectType": "Agent",
+      "name": "franz8 kafka8",
+      "mbox": "mailto:franz@kafka",
+      "mboxSHA1Sum": "0e0b01a4fb6da9670929f08e80428c6edfc54ad5",
+      "openID": null,
+      "account": null
+    },
+    "verb": {
+      "id": "submit",
+      "display": null
+    },
+    "object": null,
+    "result": null,
+    "context": {
+      "registration": null,
+      "instructor": null,
+      "team": null,
+      "contextActivities": {
+        "parent": null,
+        "grouping": null,
+        "other": null,
+        "category": [
+          {
+            "@type": "Activity",
+            "objectType": "Activity",
+            "id": "goethe-universitaet-frankfurt.moodle.forum.2",
+            "definition": {
+              "name": {
+                "_map": {
+                  "name": "quiz 2 name"
+                }
+              },
+              "description": null,
+              "type": null,
+              "moreInfo": null,
+              "extensions": null,
+              "interactionType": null,
+              "correctResponsesPattern": null,
+              "choices": null,
+              "scale": null,
+              "source": null,
+              "target": null,
+              "steps": null
+            }
+          }
+        ]
+      },
+      "revision": null,
+      "platform": "goethe-universitaet-frankfurt.moodle",
+      "language": null,
+      "statement": null,
+      "extensions": null
+    },
+    "timestamp": 1567544096000,
+    "attachments": null,
+    "voided": null,
+    "id": "ccbf3898-dbdb-3459-82d2-489e31fe6882",
+    "stored": 1567544097269,
+    "authority": null,
+    "version": null
+  }
+]

@@ -1,0 +1,69 @@
+{
+  "actor": {
+    "objectType": "Agent",
+    "name": "franz1 kafka1",
+    "mbox": "mailto:franz@kafka",
+    "mboxSHA1Sum": "0e0b01a4fb6da9670929f08e80428c6edfc54ad5",
+    "openID": null,
+    "account": null
+  },
+  "verb": {
+    "id": "replied",
+    "display": null
+  },
+  "object": null,
+  "result": {
+    "score": null,
+    "success": null,
+    "completion": null,
+    "duration": null,
+    "response": "some message 9",
+    "extensions": null
+  },
+  "context": {
+    "registration": null,
+    "instructor": null,
+    "team": null,
+    "contextActivities": {
+      "parent": null,
+      "grouping": null,
+      "other": null,
+      "category": [
+        {
+          "objectType": "Activity",
+          "id": "goethe-universitaet-frankfurt.moodle.forum.1",
+          "definition": {
+            "name": {
+              "_map": {
+                "name": "name 1"
+              }
+            },
+            "description": null,
+            "type": null,
+            "moreInfo": null,
+            "extensions": null,
+            "interactionType": null,
+            "correctResponsesPattern": null,
+            "choices": null,
+            "scale": null,
+            "source": null,
+            "target": null,
+            "steps": null
+          }
+        }
+      ]
+    },
+    "revision": null,
+    "platform": "goethe-universitaet-frankfurt.moodle",
+    "language": null,
+    "statement": null,
+    "extensions": null
+  },
+  "timestamp": 1563546005,
+  "attachments": null,
+  "voided": null,
+  "id": "7c334e14-a928-4988-9aef-cb05e7128604",
+  "stored": 1563546005566,
+  "authority": null,
+  "version": null
+}

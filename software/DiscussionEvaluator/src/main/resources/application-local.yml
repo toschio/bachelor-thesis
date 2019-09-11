@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: discussion-evaluator
+
+  main:
+    allow-bean-definition-overriding: true
+
+
+resources:
+  kafka.broker: "localhost:9092"
+  kafka.repl-factor: 1
+
+
+debug: true
+logging:
+  level: debug
+logging.level.org.springframework.kafka.config: debug

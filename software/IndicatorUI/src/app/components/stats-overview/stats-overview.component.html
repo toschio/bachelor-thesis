@@ -1,0 +1,34 @@
+<mat-toolbar>
+  <mat-toolbar-row>Forum Post Statistics</mat-toolbar-row>
+</mat-toolbar>
+
+<mat-table [dataSource]="allStats$">
+  <ng-container cdkColumnDef="username">
+    <mat-header-cell *cdkHeaderCellDef>UserID</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">{{ row.userID }}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="forumPosts">
+    <mat-header-cell *cdkHeaderCellDef>#Forum Posts</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">{{ row.forumPosts }}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="averageReplyTimeOfPost">
+    <mat-header-cell *cdkHeaderCellDef>Average Reply Time</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">{{ row.averageReplyTimeOfPost.average }}</mat-cell>
+  </ng-container>
+
+<!--  <ng-container cdkColumnDef="averageDepth">-->
+<!--    <mat-header-cell *cdkHeaderCellDef>Average Depth</mat-header-cell>-->
+<!--    <mat-cell *cdkCellDef="let row">... todo ... </mat-cell>-->
+<!--  </ng-container>-->
+
+
+  <mat-header-row *cdkHeaderRowDef="['username', 'forumPosts', 'averageReplyTimeOfPost']"></mat-header-row>
+<!--  // 'averageDepth'-->
+<!--  ,'averageDepth'-->
+  <mat-row *cdkRowDef="let row; columns: ['username', 'forumPosts', 'averageReplyTimeOfPost']"
+    (click)="selectUserStat(row)">
+  </mat-row>
+</mat-table>
+

@@ -1,0 +1,9 @@
+
+<button mat-button [matMenuTriggerFor]="appMenu">Menu</button>
+
+<mat-menu #appMenu="matMenu">
+  <button mat-menu-item routerLinkActive="active" routerLink="/user-statistics">User Discussion Overview</button>
+  <button mat-menu-item routerLinkActive="active" routerLink="/assessment-statistics">User Assessment Overiview</button>
+</mat-menu>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,36 @@
+<mat-toolbar>
+  <mat-toolbar-row>Gesture during Quizattempt Statistics</mat-toolbar-row>
+</mat-toolbar>
+
+<mat-table [dataSource]="allLeapMotionAssessments$">
+  <ng-container cdkColumnDef="username">
+    <mat-header-cell *cdkHeaderCellDef>UserID</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">{{ row.userID }}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="circles">
+    <mat-header-cell *cdkHeaderCellDef>#Circles</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">{{ row.circles }}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="keyTaps">
+    <mat-header-cell *cdkHeaderCellDef>#Key Taps</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">{{ row.keyTaps }}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="swipes">
+    <mat-header-cell *cdkHeaderCellDef>#Swipes</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">{{ row.swipes }}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="screenTaps">
+    <mat-header-cell *cdkHeaderCellDef>#Screen Taps</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">{{ row.screenTaps }}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *cdkHeaderRowDef="['username', 'circles', 'keyTaps', 'swipes', 'screenTaps']"></mat-header-row>
+  <mat-row *cdkRowDef="let row; columns: ['username', 'circles', 'keyTaps', 'swipes', 'screenTaps']"
+           (click)="selectUserAssessmentLeapMotion(row)">
+  </mat-row>
+</mat-table>
+

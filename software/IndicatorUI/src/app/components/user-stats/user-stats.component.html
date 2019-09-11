@@ -1,0 +1,38 @@
+<mat-toolbar>
+  <mat-toolbar-row>Forum Posts Stats</mat-toolbar-row>
+  <mat-toolbar-row>{{(userStat$ | async).userID}}</mat-toolbar-row>
+</mat-toolbar>
+
+
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Overview</mat-panel-title>
+
+    </mat-expansion-panel-header>
+    <ngx-charts-bar-horizontal *ngIf="(userStatperDiscussionForumPosts$ | async)"
+                               [legend]="false"
+                               [xAxis]="true"
+                               [yAxis]="true"
+                               [results]="(userStatperDiscussionForumPosts$ | async)">
+    </ngx-charts-bar-horizontal>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>#Posts per Discussion</mat-panel-title>
+      <mat-panel-description>Number of posts by this user per discussion</mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-summary-statistics [statistics]="averageForumPosts$"></app-summary-statistics>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Average Reply Time per Discussion</mat-panel-title>
+      <mat-panel-description>The average reply time for this user per discussion</mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-summary-statistics [statistics]="averageReplyTime$"></app-summary-statistics>
+  </mat-expansion-panel>
+</mat-accordion>
+
+

@@ -1,0 +1,343 @@
+version: '3'
+
+
+
+services:
+
+  indicator-ui:
+    image: indicator-ui:master
+    ports:
+      - "4300:80"
+    networks:
+      - default
+
+  # transformer - moodle datastructures to xapi
+  moodle-xapi-transformer:
+    image: moodle-xapi-transformer:master
+    environment:
+      - PARTITION_FACTOR=${PARTITION_FACTOR}
+      - REPLICATION_FACTOR=${REPLICATION_FACTOR}
+    networks:
+      - default
+      - kafkanet
+
+  discussion-evaluator:
+    image: discussion-evaluator:master
+    environment:
+      - PARTITION_FACTOR=${PARTITION_FACTOR}
+      - REPLICATION_FACTOR=${REPLICATION_FACTOR}
+    networks:
+      - default
+      - kafkanet
+
+  assessment-evaluator:
+    image: assessment-evaluator:master
+    environment:
+      - PARTITION_FACTOR=${PARTITION_FACTOR}
+      - REPLICATION_FACTOR=${REPLICATION_FACTOR}
+    networks:
+      - kafkanet
+
+  serving:
+    image: serving:master
+    ports:
+      - "8093:8080"
+    environment:
+      - PARTITION_FACTOR=${PARTITION_FACTOR}
+      - REPLICATION_FACTOR=${REPLICATION_FACTOR}
+    networks:
+      - default
+      - kafkanet
+
+  mysql-db:
+    image: mysql:5
+    ports:
+      - "3309:3306"
+    environment:
+      MYSQL_DATABASE: "moodle"
+      MYSQL_ROOT_PASSWORD: "admin"
+      MSQL_USER: "root"
+      MYSQL_PASSWORD: "pass"
+    volumes:
+      - ./../../db/db-conf/mysql-config-file.cnf:/etc/mysql/conf.d/mysql-config-file.cnf
+      - ./../../db/init-db:/docker-entrypoint-initdb.d/
+
+  moodle:
+    image: jhardison/moodle:latest
+    container_name: moodle
+    hostname: 'moodle'
+    ports:
+      - 80:80
+      - 443:443
+    env_file:
+      - moodle_variables.env
+    links:
+      - mysql-db:DB
+    networks:
+      - default
+
+
+  connect-debezium:
+    image: debezium/connect:latest
+    container_name: connect-debezium
+    depends_on:
+      - kafka
+      - mysql-db
+    ports:
+      - 8083:8083
+    environment:
+      BOOTSTRAP_SERVERS: 'kafka:29092,kafka2:29093,kafka3:29094'
+      GROUP_ID: connect-debezium
+      CONFIG_STORAGE_TOPIC: docker-connect-debezium-configs
+      CONFIG_STORAGE_REPLICATION_FACTOR: ${REPLICATION_FACTOR}
+      OFFSET_STORAGE_TOPIC: docker-connect-debezium-offsets
+      OFFSET_STORAGE_REPLICATION_FACTOR: ${REPLICATION_FACTOR}
+      STATUS_STORAGE_TOPIC: docker-connect-debezium-status
+      STATUS_STORAGE_REPLICATION_FACTOR: ${REPLICATION_FACTOR}
+      # KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      KEY_CONVERTER: io.confluent.connect.avro.AvroConverter
+      #        VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+    volumes:
+      - ./../../db/connector/cdc/scripts:/scripts
+
+  # The ZooKeeper (cp-zookeeper) image uses variables prefixed with ZOOKEEPER_ with the variables expressed exactly as they would appear in the zookeeper.properties file.
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.2.1
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181 # required
+      # ZOOKEEPER_SERVER_ID: -- required in clustered mode
+    restart: always
+    networks:
+      - kafkanet
+
+  kafka:
+    image: confluentinc/cp-kafka:5.2.1
+    hostname: kafka
+    ports:
+      - "9092:9092"
+      # - "7202:7203" # jmx
+      #            - "29092:29092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: ${KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR} # his is required when you are running with a single-node cluster. If you have three or more nodes, you can use the default
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: ${KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR} # set for prod to num of broker transaction.state.log.replication.factor
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: ${KAFKA_TRANSACTION_STATE_LOG_MIN_ISR} # transaction topics min in sync replicas transaction.state.log.min.isr
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: "kafka:29092"
+      # JMX_PORT: 7202
+      restart: always
+    networks:
+      - kafkanet
+      - default
+
+  kafka2:
+    image: confluentinc/cp-kafka:5.2.1
+    hostname: kafka2
+    ports:
+      - "9093:9093"
+      # - "7202:7203" # jmx
+      #            - "29092:29092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka2:29093,PLAINTEXT_HOST://localhost:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: ${KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR}  # his is required when you are running with a single-node cluster. If you have three or more nodes, you can use the default
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1 # set for prod to num of broker transaction.state.log.replication.factor
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1 # transaction topics min in sync replicas transaction.state.log.min.isr
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: "kafka2:29093"
+      # JMX_PORT: 7202
+      restart: always
+    networks:
+      - kafkanet
+      - default
+
+  kafka3:
+    image: confluentinc/cp-kafka:5.2.1
+    hostname: kafka3
+    ports:
+      - "9094:9094"
+      # - "7202:7203" # jmx
+      #            - "29092:29092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka3:29094,PLAINTEXT_HOST://localhost:9094
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: ${KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR}  # his is required when you are running with a single-node cluster. If you have three or more nodes, you can use the default
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1 # set for prod to num of broker transaction.state.log.replication.factor
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1 # transaction topics min in sync replicas transaction.state.log.min.isr
+      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: "kafka3:29094"
+      # JMX_PORT: 7202
+      restart: always
+    networks:
+      - kafkanet
+      - default
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:5.2.1
+    container_name: schema-registry
+    ports:
+      - "8081:8081"
+    depends_on:
+      - zookeeper
+      - kafka
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      #            SCHEMA_REGISTRY_LISTENERS: http://schema-registry:8081
+      #            SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
+      #            SCHEMA_REGISTRY_DEBUG: "true"
+    networks:
+      - kafkanet
+
+        #    kafka-connect:
+        #        image: confluentinc/cp-kafka-connect:5.2.1
+        #        ports:
+        #            - "2192:2192"
+        #            - "18083:8083"
+        #        depends_on:
+        #            - zookeeper
+        #            - kafka
+        #            - schema-registry
+        #        volumes:
+        #            - /home/tonio/Schreibtisch/bachelor-thesis/software/db/connector/cdc/debezium-connector-mysql:/usr/share/java/kafka-connect-jdbc/jar/
+        #              # - /home/tonio/Schreibtisch/bachelor-thesis/software/db/connector/mariadb-java-client-2.4.1:/usr/share/java/kafka-connect-jdbc/jar/
+        #              # - /home/tonio/Schreibtisch/bachelor-thesis/software/db/connector/mysql-connector-java-5.1.47:/usr/share/java/kafka-connect-jdbc/jar/
+        #        environment:
+        #            CONNECT_CLASSPATH: /usr/share/java/kafka-connect-jdbc/jar/mysql-connector-java-5.1.47-bin.jar
+        #            CONNECT_BOOTSTRAP_SERVERS: kafka:29092
+        #            CONNECT_REST_PORT: 8083
+        #            CONNECT_GROUP_ID: "kafka-connect-group-id"
+        #            # topics need to be constructed before connect can start
+        #            CONNECT_CONFIG_STORAGE_TOPIC: "kafka-connect-config"
+        #            CONNECT_OFFSET_STORAGE_TOPIC: "kafka-connect-offsets"
+        #            CONNECT_STATUS_STORAGE_TOPIC: "kafka-connect-status"
+        #            #            CONNECT_KEY_CONVERTER: "io.confluent.connect.avro.AvroConverter"
+        #            # CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+        #            CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+        #
+        #            #            CONNECT_VALUE_CONVERTER: "io.confluent.connect.avro.AvroConverter"
+        #            #            CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+        #            CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+        #
+        #            CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+        #            CONNECT_INTERNAL_KEY_CONVERTER_SCHEMAS_ENABLED: "false"
+        #            CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+        #            CONNECT_INTERNAL_VALUE_CONVERTER_SCHEMAS_ENABLED: "false"
+        #            CONNECT_REST_ADVERTISED_HOST_NAME: "kafka-connect"
+        #            CONNECT_PLUGIN_PATH: "/usr/share/java"
+        #            # the following restriction is here necessary as I have only one broker; and replication factor is here per available broker
+        #            CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+        #            CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+        #            CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+        #            CONNECT_LOG4J_ROOT_LOGLEVEL: DEBUG
+        #        networks:
+        #            - kafkanet
+      #
+
+
+# Confluent's control center shows all topics, allows consumption, schema insight
+# alternatives: burrow https://github.com/linkedin/Burrow, kafka-monitor https://github.com/linkedin/kafka-monitor
+  control-center:
+    image: confluentinc/cp-enterprise-control-center:5.2.1
+    ports:
+      - "9021:9021"
+    depends_on:
+      - zookeeper
+      - kafka
+      - schema-registry
+      #            - kafka-connect
+    environment:
+      CONTROL_CENTER_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: "kafka:29092,kafka2:29093,kafka3:29094"
+      CONTROL_CENTER_REPLICATION_FACTOR: ${REPLICATION_FACTOR}
+      #            CONTROL_CENTER_CONNECT_CLUSTER: kafka-connect:8083
+      CONTROL_CENTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      CONTROL_CENTER_INTERNAL_TOPIC_PARTITIONS: ${PARTITION_FACTOR}
+      CONTORL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 2
+      CONTROL_CENTER_KSQL_URL: "http://ksql-server:8088"
+      CONTROL_CENTER_KSQL_ADVERTISED_URL: "http://ksql-server:8088"
+      PORT: 9021
+    networks:
+      - kafkanet
+      - default
+
+  ksql-server:
+    image: confluentinc/cp-ksql-server:5.2.1
+    container_name: ksql-server
+    ports:
+      - 8088:8088
+    depends_on:
+      - kafka
+    environment:
+      KSQL_KSQL_EXTENSION_DIR: "/ksql/extensions"
+      KSQL_BOOTSTRAP_SERVERS: kafka:29092
+      KSQL_LISTENERS: http://0.0.0.0:8088
+      KSQL_KSQL_SERVICE_ID: edutec
+      KSQL_CUB_KAFKA_TIMEOUT: 300
+      KSQL_KSQL_QUERIES_FILE: /scripts/ksql.sql
+      #KSQL_KSQL_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      # -v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v
+      # Useful settings for development/laptop use - modify as needed for Prod
+      KSQL_KSQL_COMMIT_INTERVAL_MS: 200 # 2000
+      KSQL_KSQL_SINK_PARTITIONS: ${PARTITION_FACTOR}
+      KSQL_KSQL_CACHE_MAX_BYTES_BUFFERING: 10000000
+      KSQL_KSQL_STREAMS_AUTO_OFFSET_RESET: earliest
+      # -v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v-v
+      # Producer Confluent Monitoring Interceptors for Control Center streams monitoring
+      KSQL_PRODUCER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
+      KSQL_CONSUMER_INTERCEPTOR_CLASSES: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
+    restart: always
+    networks:
+      - kafkanet
+      - default
+    volumes:
+      - ./../../KSQL/extensions:/ksql/extensions:ro
+      - ./../../KSQL/scripts:/scripts:ro
+
+  ksql-cli:
+    image: confluentinc/cp-ksql-cli:5.2.1
+    container_name: ksql-cli
+    depends_on:
+      - ksql-server
+    entrypoint: /bin/sh
+    tty: true
+    networks:
+      - kafkanet
+      - default
+
+volumes:
+  kafka-connect:
+  mariadb_data:
+    driver: local
+  moodle_data:
+    driver: local
+
+networks:
+  default:
+  kafkanet:
+    internal: true

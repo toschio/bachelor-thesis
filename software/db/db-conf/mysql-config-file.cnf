@@ -1,0 +1,12 @@
+#
+# configuration for mysql 5 docker image used by moodle image 
+# jhardison/moodle:latest 
+#
+# expected by debezium cdc 
+#
+[mysqld]
+server-id         = 223344
+log_bin           = mysql-bin
+binlog_format     = row
+binlog_row_image  = full
+expire_logs_days  = 10

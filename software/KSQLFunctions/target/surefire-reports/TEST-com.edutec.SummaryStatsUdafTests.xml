@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.edutec.SummaryStatsUdafTests" time="0.053" tests="3" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
+    <property name="java.specification.version" value="11"/>
+    <property name="sun.cpu.isalist" value=""/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/home/tonio/Schreibtisch/bachelor-thesis/moodle-kafka/software/KSQLFunctions/target/test-classes:/home/tonio/Schreibtisch/bachelor-thesis/moodle-kafka/software/KSQLFunctions/target/classes:/home/tonio/.m2/repository/io/confluent/ksql/ksql-udf/5.3.0/ksql-udf-5.3.0.jar:/home/tonio/.m2/repository/org/slf4j/slf4j-api/1.7.26/slf4j-api-1.7.26.jar:/home/tonio/.m2/repository/org/slf4j/slf4j-log4j12/1.7.26/slf4j-log4j12-1.7.26.jar:/home/tonio/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar:/home/tonio/.m2/repository/io/confluent/common-utils/5.3.0/common-utils-5.3.0.jar:/home/tonio/.m2/repository/org/apache/zookeeper/zookeeper/3.4.14/zookeeper-3.4.14.jar:/home/tonio/.m2/repository/com/github/spotbugs/spotbugs-annotations/3.1.9/spotbugs-annotations-3.1.9.jar:/home/tonio/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/home/tonio/.m2/repository/jline/jline/0.9.94/jline-0.9.94.jar:/home/tonio/.m2/repository/org/apache/yetus/audience-annotations/0.5.0/audience-annotations-0.5.0.jar:/home/tonio/.m2/repository/io/netty/netty/3.10.6.Final/netty-3.10.6.Final.jar:/home/tonio/.m2/repository/com/101tec/zkclient/0.10/zkclient-0.10.jar:/home/tonio/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-joda/2.9.9/jackson-datatype-joda-2.9.9.jar:/home/tonio/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.9.0/jackson-annotations-2.9.0.jar:/home/tonio/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.9.9/jackson-core-2.9.9.jar:/home/tonio/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.9.9/jackson-databind-2.9.9.jar:/home/tonio/.m2/repository/joda-time/joda-time/2.7/joda-time-2.7.jar:/home/tonio/.m2/repository/org/junit/jupiter/junit-jupiter/5.4.1/junit-jupiter-5.4.1.jar:/home/tonio/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.4.1/junit-jupiter-api-5.4.1.jar:/home/tonio/.m2/repository/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar:/home/tonio/.m2/repository/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar:/home/tonio/.m2/repository/org/junit/platform/junit-platform-commons/1.4.1/junit-platform-commons-1.4.1.jar:/home/tonio/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.4.1/junit-jupiter-params-5.4.1.jar:/home/tonio/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.4.1/junit-jupiter-engine-5.4.1.jar:/home/tonio/.m2/repository/org/junit/platform/junit-platform-engine/1.4.1/junit-platform-engine-1.4.1.jar:"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="user.timezone" value=""/>
+    <property name="java.vm.specification.version" value="11"/>
+    <property name="os.name" value="Linux"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="DE"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-11-openjdk/lib"/>
+    <property name="sun.java.command" value="/home/tonio/Schreibtisch/bachelor-thesis/moodle-kafka/software/KSQLFunctions/target/surefire/surefirebooter14660883190135498702.jar /home/tonio/Schreibtisch/bachelor-thesis/moodle-kafka/software/KSQLFunctions/target/surefire 2019-08-23T23-44-08_951-jvmRun1 surefire17419473088492384314tmp surefire_017139667808716281494tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/home/tonio/Schreibtisch/bachelor-thesis/moodle-kafka/software/KSQLFunctions/target/test-classes:/home/tonio/Schreibtisch/bachelor-thesis/moodle-kafka/software/KSQLFunctions/target/classes:/home/tonio/.m2/repository/io/confluent/ksql/ksql-udf/5.3.0/ksql-udf-5.3.0.jar:/home/tonio/.m2/repository/org/slf4j/slf4j-api/1.7.26/slf4j-api-1.7.26.jar:/home/tonio/.m2/repository/org/slf4j/slf4j-log4j12/1.7.26/slf4j-log4j12-1.7.26.jar:/home/tonio/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar:/home/tonio/.m2/repository/io/confluent/common-utils/5.3.0/common-utils-5.3.0.jar:/home/tonio/.m2/repository/org/apache/zookeeper/zookeeper/3.4.14/zookeeper-3.4.14.jar:/home/tonio/.m2/repository/com/github/spotbugs/spotbugs-annotations/3.1.9/spotbugs-annotations-3.1.9.jar:/home/tonio/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/home/tonio/.m2/repository/jline/jline/0.9.94/jline-0.9.94.jar:/home/tonio/.m2/repository/org/apache/yetus/audience-annotations/0.5.0/audience-annotations-0.5.0.jar:/home/tonio/.m2/repository/io/netty/netty/3.10.6.Final/netty-3.10.6.Final.jar:/home/tonio/.m2/repository/com/101tec/zkclient/0.10/zkclient-0.10.jar:/home/tonio/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-joda/2.9.9/jackson-datatype-joda-2.9.9.jar:/home/tonio/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.9.0/jackson-annotations-2.9.0.jar:/home/tonio/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.9.9/jackson-core-2.9.9.jar:/home/tonio/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.9.9/jackson-databind-2.9.9.jar:/home/tonio/.m2/repository/joda-time/joda-time/2.7/joda-time-2.7.jar:/home/tonio/.m2/repository/org/junit/jupiter/junit-jupiter/5.4.1/junit-jupiter-5.4.1.jar:/home/tonio/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.4.1/junit-jupiter-api-5.4.1.jar:/home/tonio/.m2/repository/org/apiguardian/apiguardian-api/1.0.0/apiguardian-api-1.0.0.jar:/home/tonio/.m2/repository/org/opentest4j/opentest4j/1.1.1/opentest4j-1.1.1.jar:/home/tonio/.m2/repository/org/junit/platform/junit-platform-commons/1.4.1/junit-platform-commons-1.4.1.jar:/home/tonio/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.4.1/junit-jupiter-params-5.4.1.jar:/home/tonio/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.4.1/junit-jupiter-engine-5.4.1.jar:/home/tonio/.m2/repository/org/junit/platform/junit-platform-engine/1.4.1/junit-platform-engine-1.4.1.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/home/tonio"/>
+    <property name="user.language" value="de"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2019-07-16"/>
+    <property name="java.home" value="/usr/lib/jvm/java-11-openjdk"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/home/tonio/Schreibtisch/bachelor-thesis/moodle-kafka/software/KSQLFunctions"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="/home/tonio/Schreibtisch/bachelor-thesis/moodle-kafka/software/KSQLFunctions/target/surefire/surefirebooter14660883190135498702.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="11.0.4+11"/>
+    <property name="user.name" value="tonio"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="4.19.66-1-MANJARO"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="/home/tonio/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="java.version" value="11.0.4"/>
+    <property name="user.dir" value="/home/tonio/Schreibtisch/bachelor-thesis/moodle-kafka/software/KSQLFunctions"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vm.version" value="11.0.4+11"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="55.0"/>
+  </properties>
+  <testcase name="mergeAggregates" classname="com.edutec.SummaryStatsUdafTests" time="0.006"/>
+  <testcase name="calculateSummaryStats{Double, Map, Map}[1]" classname="com.edutec.SummaryStatsUdafTests" time="0.014"/>
+  <testcase name="calculateSummaryStats{Double, Map, Map}[2]" classname="com.edutec.SummaryStatsUdafTests" time="0"/>
+</testsuite>

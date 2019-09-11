@@ -1,0 +1,40 @@
+<mat-toolbar>
+  <mat-toolbar-row>Leap Motion Stats</mat-toolbar-row>
+  <mat-toolbar-row>{{ (leapMotionStat$ | async).userID }}</mat-toolbar-row>
+</mat-toolbar>
+
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Circle Duration</mat-panel-title>
+      <mat-panel-description>Statistics regarding Durations of Circle Gestures</mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-summary-statistics [statistics]="leapMotionCircleTime$"></app-summary-statistics>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>KeyTap Duration</mat-panel-title>
+      <mat-panel-description>Statistics regarding Durations of KeyTap Gestures</mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-summary-statistics [statistics]="leapMotionKeyTapTime$"></app-summary-statistics>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Swipe Duration</mat-panel-title>
+      <mat-panel-description>Statistics regarding Durations of Swipe Gestures</mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-summary-statistics [statistics]="leapMotionSwipeTime$"></app-summary-statistics>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>ScreenTap Duration</mat-panel-title>
+      <mat-panel-description>Statistics regarding Durations of ScreenTap Gestures</mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-summary-statistics [statistics]="leapMotionScreenTapTime$"></app-summary-statistics>
+  </mat-expansion-panel>
+</mat-accordion>
+
+

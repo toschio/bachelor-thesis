@@ -1,0 +1,9 @@
+
+resources:
+  kafkabroker: "localhost:9092"
+
+
+debug: true
+logging:
+  level: debug
+logging.level.org.springframework.kafka.config: debug
