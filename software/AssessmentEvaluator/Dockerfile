@@ -9,4 +9,4 @@ ADD target/assessmentEvaluator.jar /usr/share/assessment-evaluator/assessmentEva
 ENTRYPOINT ["/usr/bin/java", "-jar", "/usr/share/assessment-evaluator/assessmentEvaluator.jar"]
 
 # to build the jar run:
-# ./mvnw -Dmaven.test.skip=true install
+# ./mvnw install

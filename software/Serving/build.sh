@@ -7,10 +7,10 @@ cd $script_full_path
 echo "Calling Maven Install without Tests for Serving application"
 echo "--------------------------------------------------------------"
 
-mvn -Dmaven.test.skip=true install
+./mvnw install
 
 echo "Calling Docker build for serving:master"
-docker build -t serving:master .
+docker build -t toschio/bachelor-thesis.serving:master .
 
 echo "done"
 

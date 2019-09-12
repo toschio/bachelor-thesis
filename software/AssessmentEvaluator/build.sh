@@ -9,7 +9,7 @@ echo "--------------------------------------------------------------"
 ./mvnw install
 
 echo "Calling Docker build for moodle-xapi-transformer:master"
-docker build -t assessment-evaluator:master .
+docker build -t toschio/bachelor-thesis.assessment-evaluator:master .
 
 echo "done"
 

@@ -5,7 +5,7 @@ version: '3'
 services:
 
   indicator-ui:
-    image: indicator-ui:master
+    image: toschio/bachelor-thesis.indicator-ui:master
     ports:
       - "4300:80"
     networks:
@@ -13,7 +13,7 @@ services:
 
   # transformer - moodle datastructures to xapi
   moodle-xapi-transformer:
-    image: moodle-xapi-transformer:master
+    image: toschio/bachelor-thesis.moodle-xapi-transformer:master
     environment:
       - PARTITION_FACTOR=${PARTITION_FACTOR}
       - REPLICATION_FACTOR=${REPLICATION_FACTOR}
@@ -22,7 +22,7 @@ services:
       - kafkanet
 
   discussion-evaluator:
-    image: discussion-evaluator:master
+    image: toschio/bachelor-thesis.discussion-evaluator:master
     environment:
       - PARTITION_FACTOR=${PARTITION_FACTOR}
       - REPLICATION_FACTOR=${REPLICATION_FACTOR}
@@ -31,7 +31,7 @@ services:
       - kafkanet
 
   assessment-evaluator:
-    image: assessment-evaluator:master
+    image: toschio/bachelor-thesis.assessment-evaluator:master
     environment:
       - PARTITION_FACTOR=${PARTITION_FACTOR}
       - REPLICATION_FACTOR=${REPLICATION_FACTOR}
@@ -39,7 +39,7 @@ services:
       - kafkanet
 
   serving:
-    image: serving:master
+    image: toschio/bachelor-thesis.serving:master
     ports:
       - "8093:8080"
     environment:
