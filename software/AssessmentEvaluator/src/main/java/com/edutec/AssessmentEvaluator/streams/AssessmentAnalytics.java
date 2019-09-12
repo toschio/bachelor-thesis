@@ -33,12 +33,8 @@ public class AssessmentAnalytics {
         final KTable<String, Statement> userKeyedAssessmentKTable = streamsBuilder
                 .stream(topicsProvider.getXapi_statement_assessment().getTopicname(), Consumed.with(Serdes.String(), new JsonSerde<>(Statement.class)))
                 // distribute assessments by user
-                .selectKey((key, value) -> value.getActor().getName())
                 .groupByKey(Serialized.with(Serdes.String(), new JsonSerde<>(Statement.class)))
                 .reduce((o, n) -> n);
-//        , Materialized.<String, Statement, KeyValueStore<Bytes, byte[]>>as("theassessmenttable")
-//                        .withKeySerde(Serdes.String())
-//                        .withValueSerde(new JsonSerde<>(Statement.class)));
 
         // assume leap motion stream is keyed by user; String is userid
         final KStream<String, LeapMotionFrame> userKeyedLeapMotionKStream = streamsBuilder

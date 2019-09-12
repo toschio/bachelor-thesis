@@ -249,7 +249,7 @@ public class AssessmentAnalyticsTests {
      */
     private Statement publishStatement() {
         Statement statement = getValidAssessmentStatement();
-        testDriver.pipeInput(statementRecordFactory.create(topicsProvider.getXapi_statement_assessment().getTopicname(), statement.getId().toString(),
+        testDriver.pipeInput(statementRecordFactory.create(topicsProvider.getXapi_statement_assessment().getTopicname(), statement.getActor().getName(),
                 statement));
         return statement;
     }
@@ -262,7 +262,7 @@ public class AssessmentAnalyticsTests {
     private Statement publishStatement(String username) {
         Statement statement = getValidAssessmentStatement();
         statement.getActor().setName(username);
-        testDriver.pipeInput(statementRecordFactory.create(topicsProvider.getXapi_statement_assessment().getTopicname(), statement.getId().toString(),
+        testDriver.pipeInput(statementRecordFactory.create(topicsProvider.getXapi_statement_assessment().getTopicname(), statement.getActor().getName(),
                 statement));
         return statement;
     }
@@ -344,7 +344,7 @@ public class AssessmentAnalyticsTests {
         Assert.assertTrue(statements.size() > 0);
         testDriver.pipeInput(statements.stream()
                 .map(statement -> statementRecordFactory.create(
-                        topicsProvider.getXapi_statement_assessment().getTopicname(), statement.getId().toString(), statement))
+                        topicsProvider.getXapi_statement_assessment().getTopicname(), statement.getActor().getName(), statement))
                 .collect(Collectors.toList()));
 
         List<LeapMotionFrame> frames = null;
