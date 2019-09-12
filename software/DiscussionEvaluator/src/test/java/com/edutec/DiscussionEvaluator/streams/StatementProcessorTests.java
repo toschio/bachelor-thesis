@@ -3,6 +3,7 @@ package com.edutec.DiscussionEvaluator.streams;
 import com.edutec.DiscussionEvaluator.helper.ForumPostVerbs;
 import com.edutec.DiscussionEvaluator.models.DiscussionPostStat;
 import com.edutec.DiscussionEvaluator.models.NumberOfPostsPerDiscussion;
+import com.edutec.DiscussionEvaluator.models.ReplyTimeOfPostsPerDiscussion;
 import com.edutec.DiscussionEvaluator.models.xapimodels.*;
 import com.edutec.DiscussionEvaluator.props.TopicsConfigs;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -26,6 +27,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.kafka.annotation.EnableKafkaStreams;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerde;
 
 import java.io.File;
@@ -121,7 +123,7 @@ public class StatementProcessorTests {
         stat.setForumPosts(1L);
         stat.setAverageForumPostsPerDiscussion(averageForumPostsPerDiscusison);
         // stream input
-        testDriver.pipeInput(statementRecordFactory.create(INPUT_TOPIC, validStatement.getId().toString(), validStatement));
+        testDriver.pipeInput(statementRecordFactory.create(INPUT_TOPIC, validStatement.getActor().getName(), validStatement));
         // run test
         ProducerRecord<String, DiscussionPostStat> statRecord = testDriver.readOutput(OUTPUT_TOPIC, Serdes.String().deserializer(), new JsonSerde<>(DiscussionPostStat.class).deserializer());
 
@@ -142,8 +144,8 @@ public class StatementProcessorTests {
         Statement validStatement = getValidStatement(actorName, activityId);
         Statement validStatement2 = getValidStatement(actorName, activityId);
 
-        testDriver.pipeInput(statementRecordFactory.create(INPUT_TOPIC, validStatement.getId().toString(), validStatement));
-        testDriver.pipeInput(statementRecordFactory.create(INPUT_TOPIC, validStatement2.getId().toString(), validStatement2));
+        testDriver.pipeInput(statementRecordFactory.create(INPUT_TOPIC, validStatement.getActor().getName(), validStatement));
+        testDriver.pipeInput(statementRecordFactory.create(INPUT_TOPIC, validStatement2.getActor().getName(), validStatement2));
         // run test
         ProducerRecord<String, DiscussionPostStat> statRecord = testDriver.readOutput(OUTPUT_TOPIC, Serdes.String().deserializer(), new JsonSerde<>(DiscussionPostStat.class).deserializer());
         ProducerRecord<String, DiscussionPostStat> finalRecord = testDriver.readOutput(OUTPUT_TOPIC, Serdes.String().deserializer(), new JsonSerde<>(DiscussionPostStat.class).deserializer());
@@ -185,8 +187,8 @@ public class StatementProcessorTests {
         Statement validStatement2 = getValidStatement(actorName2, activityId);
 
         testDriver.pipeInput(List.of(
-                statementRecordFactory.create(INPUT_TOPIC, validStatement.getId().toString(), validStatement),
-                statementRecordFactory.create(INPUT_TOPIC, validStatement2.getId().toString(), validStatement2)
+                statementRecordFactory.create(INPUT_TOPIC, validStatement.getActor().getName(), validStatement),
+                statementRecordFactory.create(INPUT_TOPIC, validStatement2.getActor().getName(), validStatement2)
         ));
         // run test
         ProducerRecord<String, DiscussionPostStat> statRecord = testDriver.readOutput(OUTPUT_TOPIC, Serdes.String().deserializer(), new JsonSerde<>(DiscussionPostStat.class).deserializer());
@@ -215,9 +217,9 @@ public class StatementProcessorTests {
         Statement validStatement3 = getValidStatement(actorName2, activityId2);
 
         testDriver.pipeInput(List.of(
-                statementRecordFactory.create(INPUT_TOPIC, validStatement.getId().toString(), validStatement),
-                statementRecordFactory.create(INPUT_TOPIC, validStatement2.getId().toString(), validStatement2),
-                statementRecordFactory.create(INPUT_TOPIC, validStatement3.getId().toString(), validStatement3)
+                statementRecordFactory.create(INPUT_TOPIC, validStatement.getActor().getName(), validStatement),
+                statementRecordFactory.create(INPUT_TOPIC, validStatement2.getActor().getName(), validStatement2),
+                statementRecordFactory.create(INPUT_TOPIC, validStatement3.getActor().getName(), validStatement3)
         ));
         // run test
         ProducerRecord<String, DiscussionPostStat> statRecord = testDriver.readOutput(OUTPUT_TOPIC, Serdes.String().deserializer(), new JsonSerde<>(DiscussionPostStat.class).deserializer());
@@ -256,8 +258,8 @@ public class StatementProcessorTests {
         validStatement2.setTimestamp(validStatement.getTimestamp().plusSeconds(42));
         validStatement2.setObject(new StatementRef(validStatement.getId()));
 
-        testDriver.pipeInput(statementRecordFactory.create(INPUT_TOPIC, validStatement.getId().toString(), validStatement));
-        testDriver.pipeInput(statementRecordFactory.create(INPUT_TOPIC, validStatement2.getId().toString(), validStatement2));
+        testDriver.pipeInput(statementRecordFactory.create(INPUT_TOPIC, validStatement.getActor().getName(), validStatement));
+        testDriver.pipeInput(statementRecordFactory.create(INPUT_TOPIC, validStatement2.getActor().getName(), validStatement2));
         // run test
         ProducerRecord<String, DiscussionPostStat> statRecord = testDriver.readOutput(OUTPUT_TOPIC, Serdes.String().deserializer(), new JsonSerde<>(DiscussionPostStat.class).deserializer());
         ProducerRecord<String, DiscussionPostStat> statRecord2 = testDriver.readOutput(OUTPUT_TOPIC, Serdes.String().deserializer(), new JsonSerde<>(DiscussionPostStat.class).deserializer());
@@ -285,7 +287,7 @@ public class StatementProcessorTests {
             throw new RuntimeException("resource read failed");
         }
         Assert.assertEquals(47, statements.size());
-        statements.stream().forEach(next -> testDriver.pipeInput(statementRecordFactory.create(INPUT_TOPIC, next.getId().toString(), next)));
+        statements.stream().forEach(next -> testDriver.pipeInput(statementRecordFactory.create(INPUT_TOPIC, next.getActor().getName(), next)));
 
         List<ProducerRecord<String, DiscussionPostStat>> records = new ArrayList<>();
         records.add(testDriver.readOutput(OUTPUT_TOPIC, Serdes.String().deserializer(),
@@ -337,6 +339,7 @@ public class StatementProcessorTests {
         Statement statement = new Statement();
         statement.setId(UUID.randomUUID());
         statement.setActor(getValidActor(actorName));
+        statement.setObject(new StatementRef(UUID.randomUUID()));
         statement.setContext(getValidContext(activitiyRespDiscussionId));
         statement.setVerb(ForumPostVerbs.posted());
         statement.setTimestamp(DateTime.now());

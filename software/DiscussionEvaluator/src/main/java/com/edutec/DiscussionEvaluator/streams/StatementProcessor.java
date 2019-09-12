@@ -35,16 +35,15 @@ public class StatementProcessor {
     @Bean
     public KStream<?, ?> counterPerUser(StreamsBuilder streamsBuilder) {
         // consumes the input stream
-        KStream<String, Statement> statementKStream = streamsBuilder.stream(
+        KStream<String, Statement> statementKStreamKeyedByUser = streamsBuilder.stream(
                 topicsProvider.getXapi_statement_discussion().getTopicname(),
                 Consumed.with(Serdes.String(), new JsonSerde<>(Statement.class)));
 
         /**
          *  number of posts per user per diskussion: <actor id, number of posts>
          */
-        KTable<String, NumberOfPostsPerDiscussion> numberOfPostsPerDiscussion =
-                statementKStream
-                        .selectKey(StandardStreamsOperations.KEY_BY_ACTOR)
+        KTable<String, NumberOfPostsPerDiscussion> numberOfPostsPerDiscussionKTableKeyedByUser =
+                statementKStreamKeyedByUser
                         .groupByKey(Serialized.with(Serdes.String(), new JsonSerde<>(Statement.class)))
                         .aggregate(
                                 // initializer
@@ -61,8 +60,8 @@ public class StatementProcessor {
         /**
          * ReplyTimeOfPostPerDiscussion for each actor
          */
-        KTable<String, ReplyTimeOfPostsPerDiscussion> replyTimeOfPostsPerDiscussionKTable =
-                statementKStream
+        KTable<String, ReplyTimeOfPostsPerDiscussion> replyTimeOfPostsPerDiscussionKTableKeyedByUser =
+                statementKStreamKeyedByUser
                         // pick only replies to other statements
                         .filter((key, value) -> {
                             if (value == null || value.getVerb() == null || value.getVerb().getId() == null) {
@@ -75,7 +74,8 @@ public class StatementProcessor {
                         // select target object as key
                         .map((readOnlyKey, value) -> KeyValue.pair(((StatementRef) (value.getObject())).getId().toString(), value))
                         // join parent statement to get timedifference
-                        .join(statementKStream
+                        .join(statementKStreamKeyedByUser
+                                        .selectKey((key, value) -> value.getId().toString())
                                         .groupByKey(Serialized.with(Serdes.String(), new JsonSerde<>(Statement.class)))
                                         .reduce((value1, value2) -> value2),
                                 (value1, value2) -> {
@@ -87,8 +87,8 @@ public class StatementProcessor {
                                     );
                                 }, Joined.with(Serdes.String(), new JsonSerde<>(Statement.class), new JsonSerde<>(Statement.class)))
                         // group by user
-                        .groupBy((key, value) -> value.getActorId(), Serialized.with(Serdes.String(),
-                                new JsonSerde<>(ReplyTimeOfPostsPerDiscussion.ReplyTimeOfPost.class)))
+                        .selectKey((key, value) -> value.getActorId())
+                        .groupByKey(Serialized.with(Serdes.String(), new JsonSerde<>(ReplyTimeOfPostsPerDiscussion.ReplyTimeOfPost.class)))
                         .aggregate(
                                 ReplyTimeOfPostsPerDiscussion::new,
                                 ReplyTimeOfPostsPerDiscussion::add,
@@ -101,14 +101,14 @@ public class StatementProcessor {
         /**
          * pack indicators together in a DiscussionPostStat object by joining
          */
-        statementKStream
+        statementKStreamKeyedByUser
                 .selectKey(StandardStreamsOperations.KEY_BY_ACTOR)
                 .mapValues((readOnlyKey, value) -> new DiscussionPostStat())
                 // the messages in statementKStream may arrive earlier than their counterpart entry in numberOfPostsPerDiscussion:
                 // the numberOfPostsPerDiscussion therefore may lag behind
-                .join(numberOfPostsPerDiscussion, DiscussionPostStat::apply, Joined.with(Serdes.String(),
+                .join(numberOfPostsPerDiscussionKTableKeyedByUser, DiscussionPostStat::apply, Joined.with(Serdes.String(),
                         new JsonSerde<>(DiscussionPostStat.class), new JsonSerde<>(NumberOfPostsPerDiscussion.class)))
-                .leftJoin(replyTimeOfPostsPerDiscussionKTable, DiscussionPostStat::apply, Joined.with(Serdes.String(),
+                .leftJoin(replyTimeOfPostsPerDiscussionKTableKeyedByUser, DiscussionPostStat::apply, Joined.with(Serdes.String(),
                         new JsonSerde<>(DiscussionPostStat.class), new JsonSerde<>(ReplyTimeOfPostsPerDiscussion.class)))
                 .to(topicsProvider.getDiscussion_analytics().getTopicname(), Produced.with(Serdes.String(), new JsonSerde<>(DiscussionPostStat.class)));
 
@@ -126,6 +126,6 @@ public class StatementProcessor {
 //                .to(topicsProvider.getDiscussion_analytics().getTopicname(), Produced.with(Serdes.String(), new JsonSerde<>(DiscussionPostStat.class)));
 
 
-        return statementKStream;
+        return statementKStreamKeyedByUser;
     }
 }
