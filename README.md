@@ -1,7 +1,7 @@
 # bachelor-thesis
 This is a bachelor thesis written in 2019 for BSc Informatik, Goethe-Universität Frankfurt am Main
 
-# Abstract
+## Abstract
 
 This thesis aims at an explorative implementation of a real-time learning analytics engine based
 on Kafka and Kafka Streams. A real-time learning analytics engine should be able to make re-
